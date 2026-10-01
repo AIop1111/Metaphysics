@@ -72,11 +72,28 @@ pnpm build
 
 本包保留 Vinext 与 Cloudflare Worker 构建结构。上传 GitHub 用于存放和维护源码；实际网站发布使用兼容的 Worker / Sites 部署流程。
 
+## 多语言网址与 SEO
+
+除首页互动应用外，六十四卦另有服务端渲染的独立页面，便于搜索引擎收录：
+
+| 网址 | 内容 |
+| --- | --- |
+| `/zh/hexagram`、`/en/hexagram` | 六十四卦总表 |
+| `/zh/hexagram/49-ge`、`/en/hexagram/49-ge` | 单卦页面（卦序 + 拼音）；`/en/hexagram/49` 会 308 跳转到规范网址 |
+| `/sitemap.xml`、`/robots.txt` | 站点地图（含 hreflang 互指）与爬虫规则 |
+
+每页带 `canonical`、`hreflang`（zh-Hans / en / x-default）、Open Graph 与 JSON-LD 面包屑。首页支持 `/?lang=en`，未保存语言偏好时按浏览器语言选择中英文。
+
+**上线前请设置 `NEXT_PUBLIC_SITE_URL`**（如 `https://你的域名`），让 canonical、hreflang 和站点地图都指向主域名；未设置时使用请求的主机名。之后在 Google Search Console 提交 `/sitemap.xml`。
+
+相关文件：`lib/site.ts`（拼音、网址、语言）、`app/[lang]/`（单卦与总表页）、`app/sitemap.xml/`、`app/robots.txt/`。互动应用位于 `app/(app)/`。
+
 ## 主要文件
 
 | 路径 | 用途 |
 | --- | --- |
-| `app/page.tsx` | 首页、卦象探索与手记 |
+| `app/(app)/page.tsx` | 首页、卦象探索与手记 |
+| `app/[lang]/hexagram/` | 服务端渲染的中英文六十四卦页面 |
 | `app/minimal-ui.css` | 简洁深色风格 |
 | `app/globals.css` | 基础排版、交互与响应式布局 |
 | `components/horoscope.tsx` | 星座页面 |

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
+import Link from "next/link";
 import { BookOpen, Bookmark, Check, CircleHelp, Download, FileText, Globe2, Layers3, Plus, RotateCcw, Save, ShieldCheck, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -155,8 +156,13 @@ export default function Home() {
       viewRef.current = next; setView(next);
     };
     syncHash(); window.addEventListener("hashchange", syncHash);
-    try { const raw = localStorage.getItem(STORAGE_KEY); try { setEntries(parseEntries(raw)); } catch { setStorageCorrupt(true); setStorageError(true); } const savedLang = localStorage.getItem("guanxiang.language"); if (savedLang === "en") setLang("en"); }
+    let savedLang: string | null = null;
+    try { const raw = localStorage.getItem(STORAGE_KEY); try { setEntries(parseEntries(raw)); } catch { setStorageCorrupt(true); setStorageError(true); } savedLang = localStorage.getItem("guanxiang.language"); }
     catch { setStorageError(true); }
+    // Explicit ?lang= link > saved choice > browser language (non-Chinese browsers start in English).
+    const requestedLang = new URLSearchParams(window.location.search).get("lang");
+    const initialLang = requestedLang === "en" || requestedLang === "zh" ? requestedLang : savedLang === "en" || savedLang === "zh" ? savedLang : (navigator.languages?.[0] ?? navigator.language ?? "").toLowerCase().startsWith("zh") ? "zh" : "en";
+    if (initialLang === "en") setLang("en");
     setReady(true);
     return () => window.removeEventListener("hashchange", syncHash);
   }, []);
@@ -233,7 +239,7 @@ export default function Home() {
       </>}
     </main>
 
-    <footer className="site-footer"><div><span className="footer-brand">观象</span><span>{t("观其象，留一问。", "See the pattern. Keep the question.")}</span></div><span className="footer-note">{t("文化学习 · 个人反思", "CULTURAL LEARNING · PERSONAL REFLECTION")}</span><button onClick={() => setModal(3)}>{t("方法、出处与隐私", "Method, sources & privacy")}<CircleHelp size={15} /></button></footer>
+    <footer className="site-footer"><div><span className="footer-brand">观象</span><span>{t("观其象，留一问。", "See the pattern. Keep the question.")}</span></div><span className="footer-note">{t("文化学习 · 个人反思", "CULTURAL LEARNING · PERSONAL REFLECTION")}</span><nav className="footer-links" aria-label={t("六十四卦全表", "All 64 hexagrams")}><Link href="/zh/hexagram" hrefLang="zh-Hans" lang="zh-Hans">六十四卦全表</Link><Link href="/en/hexagram" hrefLang="en" lang="en">64 Hexagrams (English)</Link></nav><button onClick={() => setModal(3)}>{t("方法、出处与隐私", "Method, sources & privacy")}<CircleHelp size={15} /></button></footer>
 
     <Dialog open={modal !== null} onOpenChange={open => { if (!open) setModal(null); }}><DialogContent className="knowledge-dialog"><DialogHeader><DialogTitle>{modal === 3 ? t("方法、出处与隐私", "Method, sources & privacy") : modal !== null ? LEARNING[modal].title[li] : ""}</DialogTitle><DialogDescription>{t("观象 · 易经文化学习笔记", "Guanxiang · Notes for exploring the I Ching")}</DialogDescription></DialogHeader><div className="knowledge-body">
       {modal === 0 && <><p>{t("一个卦由六爻组成，次序从下往上：初爻在底部，第六爻在顶部。完整的线是阳爻，分成两段的线是阴爻。", "A hexagram has six lines, read from bottom to top. The first line is at the bottom; the sixth is at the top. A solid line is yang, and a broken line is yin.")}</p><p>{t("下方三爻组成下卦，上方三爻组成上卦。革卦上兑下离，因此你会看到上部对应泽，下部对应火。", "The lower three lines form the lower trigram; the upper three form the upper trigram. Ge has Lake above Fire.")}</p><p>{t("探索页只提供三组已核对的结构示例，可以反复比较，不需要输入个人资料。", "The explorer offers three checked structural examples to compare. No personal details are needed.")}</p><a className="source-link" href="https://zh.wikisource.org/wiki/周易/繫辭上" target="_blank" rel="noreferrer">{t("参考：《周易·系辞上》", "Reference: I Ching, Xici I")}</a></>}

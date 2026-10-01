@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import "./minimal-ui.css";
+import "../globals.css";
+import "../minimal-ui.css";
 
 export const metadata: Metadata = {
   title: "观象 · Guanxiang | 六十四卦、星座、MBTI 与星图书阁",

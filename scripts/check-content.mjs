@@ -121,7 +121,7 @@ console.log(`Content checks passed: 64 hexagrams, 384 line texts, 384 reversible
 
 const React = require("react");
 const { renderToStaticMarkup } = require("react-dom/server");
-const Home = load(path.join(root, "app/page")).default;
+const Home = load(path.join(root, "app/(app)/page")).default;
 const { KnowledgeLibrary } = load(path.join(root, "components/knowledge-library"));
 const { Horoscope } = load(path.join(root, "components/horoscope"));
 const { Mbti } = load(path.join(root, "components/mbti"));
