@@ -80,6 +80,8 @@ pnpm build
 | --- | --- |
 | `/zh/hexagram`、`/en/hexagram` | 六十四卦总表 |
 | `/zh/hexagram/49-ge`、`/en/hexagram/49-ge` | 单卦页面（卦序 + 拼音）；`/en/hexagram/49` 会 308 跳转到规范网址 |
+| `/zh/reading`、`/en/reading` | 在线起卦（三枚铜钱法，浏览器加密随机数），可逐爻或一次掷完 |
+| `/zh/reading/result?lines=789687` | 起卦结果（六位数自下而上，6–9）：本卦、变爻、之卦；可分享但不被索引（noindex），问题不进入网址，只存于浏览器并可留进手记 |
 | `/sitemap.xml`、`/robots.txt` | 站点地图（含 hreflang 互指）与爬虫规则 |
 
 英文单卦页另附理雅各（James Legge）1882 年英译的卦辞与爻辞（公有领域，`lib/hexagrams-legge.json`，经 [opencosmos-ai/iching](https://github.com/opencosmos-ai/iching)（CC0）转录：1–31 卦对照维基文库扫描本校对；32–64 卦为扫描 OCR，卦辞取自另一份 Legge 文本，爻辞经人工校正，39 与 64 卦上爻扫描缺字处以“…”标出而不补写），以及观象原创的英文导读与逐爻解读（`lib/hexagram-readings-en.ts`）。

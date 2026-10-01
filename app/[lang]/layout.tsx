@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { HREFLANG, SITE_LOCALES, hexagramIndexPath, isSiteLocale } from "@/lib/site";
+import { HREFLANG, SITE_LOCALES, hexagramIndexPath, isSiteLocale, readingPath } from "@/lib/site";
 import "./reader.css";
 
 // Server-rendered, crawlable pages with one URL per language (/zh/…, /en/…).
@@ -17,6 +17,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <header className="reader-header">
           <a className="reader-brand" href={`/?lang=${lang}`}><strong>观象</strong><span>GUANXIANG</span></a>
           <nav aria-label={zh ? "主要导航" : "Main navigation"}>
+            <a href={readingPath(lang)}>{zh ? "起卦" : "Cast a reading"}</a>
             <a href={hexagramIndexPath(lang)}>{zh ? "六十四卦" : "64 Hexagrams"}</a>
             <a href={`/?lang=${lang}#library`}>{zh ? "星图书阁" : "Library"}</a>
             <a href={`/?lang=${lang}#journal`}>{zh ? "手记" : "Journal"}</a>

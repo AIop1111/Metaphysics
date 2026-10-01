@@ -1,11 +1,11 @@
 import { HEXAGRAMS } from "@/lib/hexagrams";
-import { HREFLANG, SITE_LOCALES, hexagramIndexPath, hexagramPath, originFromRequest, type SiteLocale } from "@/lib/site";
+import { HREFLANG, SITE_LOCALES, hexagramIndexPath, hexagramPath, originFromRequest, readingPath, type SiteLocale } from "@/lib/site";
 
 const escape = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 export function GET(request: Request) {
   const origin = originFromRequest(request);
-  const pages: ((lang: SiteLocale) => string)[] = [hexagramIndexPath, ...HEXAGRAMS.map(h => (lang: SiteLocale) => hexagramPath(lang, h.number))];
+  const pages: ((lang: SiteLocale) => string)[] = [readingPath, hexagramIndexPath, ...HEXAGRAMS.map(h => (lang: SiteLocale) => hexagramPath(lang, h.number))];
   const entry = (loc: string, alternates = "") => `  <url>\n    <loc>${escape(loc)}</loc>\n${alternates}  </url>\n`;
   const links = (pathFor: (lang: SiteLocale) => string) => [
     ...SITE_LOCALES.map(lang => `    <xhtml:link rel="alternate" hreflang="${HREFLANG[lang]}" href="${escape(origin + pathFor(lang))}"/>\n`),

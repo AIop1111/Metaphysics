@@ -161,3 +161,24 @@ LEGGE.forEach((entry, i) => {
   assert.equal(Boolean(reading.extra), HEXAGRAMS[i].extra.length > 0, `Reading extra ${n}`);
 });
 console.log("English reference checks passed: 64 Legge judgments, 384 Legge lines (2 marked gaps), 64 original readings.");
+
+const { tossLine, parseCast, analyseCast } = load(path.join(root, "lib/cast"));
+const { castSnapshot } = load(path.join(root, "lib/cast-snapshot"));
+// Every 3-bit coin pattern once: 6 and 9 once each, 7 and 8 three times each (1/8, 3/8, 3/8, 1/8).
+const tally = { 6: 0, 7: 0, 8: 0, 9: 0 };
+for (let pattern = 0; pattern < 8; pattern++) {
+  const bits = [pattern & 1, (pattern >> 1) & 1, (pattern >> 2) & 1];
+  tally[tossLine(() => bits.shift()).value]++;
+}
+assert.deepEqual(tally, { 6: 1, 7: 3, 8: 3, 9: 1 });
+for (let i = 0; i < 500; i++) assert.ok([6, 7, 8, 9].includes(tossLine().value));
+for (const bad of [undefined, "", "78978", "7897890", "789785", "12345a", ["789789"]]) assert.equal(parseCast(bad), null);
+const sample = analyseCast(parseCast("897779"));
+assert.equal(hexagramByLines(sample.primary).number, 44);
+assert.equal(hexagramByLines(sample.relating).number, 31);
+assert.deepEqual(sample.moving, [2, 6]);
+assert.equal(analyseCast(parseCast("787878")).relating, null);
+assert.equal(hexagramByLines(analyseCast(parseCast("999999")).relating).number, 2);
+for (const lines of ["897779", "787878", "999999", "666666", "976868"]) assert.ok(isSnapshot(castSnapshot(parseCast(lines))), lines);
+assert.deepEqual(parseEntries(JSON.stringify([{ id: "c", question: "q", facts: "", understanding: "", unknown: "", action: "", exampleId: "plum", changed: false, snapshot: castSnapshot(parseCast("897779")), createdAt: "2026-10-01T00:00:00.000Z", updatedAt: "2026-10-01T00:00:00.000Z", reviews: [] }])).length, 1);
+console.log("Casting checks passed: coin odds 1/8 · 3/8 · 3/8 · 1/8, parsing, primary/relating hexagrams, journal snapshots.");

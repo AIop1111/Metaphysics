@@ -201,3 +201,6 @@ body { background: var(--background); }
   .minimal-ui .horoscope-large-glyph { font-size: 2.5rem; }
   .minimal-ui .site-footer { padding: 24px 20px; }
 }
+.minimal-ui .home-portal-cast { display: block; margin: -12px 0 16px; color: var(--primary); font-size: 13px; text-decoration: none; }
+@media (max-width: 560px) { .minimal-ui .home-portal-cast { margin: 0 0 10px; font-size: 12px; } .minimal-ui .home-portal-cast .cast-extra { display: none; } }
+.minimal-ui .home-portal-cast:hover { text-decoration: underline; text-underline-offset: 3px; }

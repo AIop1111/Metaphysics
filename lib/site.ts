@@ -66,3 +66,5 @@ export function languageAlternates(origin: string, pathFor: (lang: SiteLocale) =
 
 /** Traditional image name: 泽火革, or 乾为天 when both trigrams match. */
 export const zhImageName = (h: HexagramText) => h.upper === h.lower ? `${h.name}为${trigramName(h.upper, "zh")}` : `${trigramName(h.upper, "zh")}${trigramName(h.lower, "zh")}${h.name}`;
+
+export const readingPath = (lang: SiteLocale) => `/${lang}/reading`;
