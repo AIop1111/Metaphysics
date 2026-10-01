@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import { HEXAGRAMS, hexagramSymbol } from "@/lib/hexagrams";
 import { HEXAGRAM_NOTES } from "@/lib/hexagram-notes";
+import { LEGGE_CITATION, leggeFor } from "@/lib/legge";
+import { READINGS_EN } from "@/lib/hexagram-readings-en";
 import { HREFLANG, SITE_LOCALES, hexagramFromSlug, hexagramIndexPath, hexagramPath, hexagramPinyin, hexagramSlug, isSiteLocale, languageAlternates, siteOrigin, trigramName, zhImageName, type SiteLocale } from "@/lib/site";
 
 type Params = Promise<{ lang: string; slug: string }>;
@@ -25,10 +27,10 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const origin = await siteOrigin();
   const pinyin = hexagramPinyin(h.number);
   const title = lang === "en"
-    ? `Hexagram ${h.number}: ${pinyin} (${h.traditional}) – ${note.title} | I Ching Meaning & Original Text`
+    ? `Hexagram ${h.number}: ${pinyin} (${h.traditional}) – ${note.title} | I Ching Meaning, Lines & Legge Translation`
     : `第${h.number}卦 ${h.name}卦（${h.traditional}）卦辞爻辞原文与白话导读 | 观象`;
   const description = clip(lang === "en"
-    ? `I Ching hexagram ${h.number}, ${pinyin}: ${trigramName(h.upper, "en")} over ${trigramName(h.lower, "en")}. ${note.summary[1]}`
+    ? `I Ching hexagram ${h.number}, ${pinyin}: ${trigramName(h.upper, "en")} over ${trigramName(h.lower, "en")}. ${note.summary[1]} With the original Chinese and Legge's translation of all six lines.`
     : `${h.name}卦，${zhImageName(h)}，上${h.upper}下${h.lower}。${note.summary[0]}`);
   const url = origin + hexagramPath(lang, h.number);
   return {
@@ -55,6 +57,8 @@ export default async function HexagramPage({ params }: { params: Params }) {
   const t = (zh: string, english: string) => en ? english : zh;
   const other: SiteLocale = en ? "zh" : "en";
   const pinyin = hexagramPinyin(h.number);
+  const legge = leggeFor(h.number);
+  const reading = READINGS_EN[h.number];
   const prev = h.number > 1 ? h.number - 1 : null;
   const next = h.number < 64 ? h.number + 1 : null;
   const upper = `${h.upper} · ${trigramName(h.upper, lang)}`;
@@ -98,22 +102,40 @@ export default async function HexagramPage({ params }: { params: Params }) {
     <section className="panel" aria-labelledby="overview">
       <h2 id="overview">{t("白话导读", "Overview")}</h2>
       <p>{note.summary[en ? 1 : 0]}</p>
+      {en && reading?.essay.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
       <p className="prompt">{t("留一个问题：", "A question to reflect on: ")}{note.prompt[en ? 1 : 0]}</p>
-      <p className="fine">{t("导读概述传统主题，思考问题为观象编辑文字，均非逐字译文。", "This overview summarizes traditional themes and is original Guanxiang writing, not a translation.")}</p>
+      <p className="fine">{t("导读概述传统主题，思考问题为观象编辑文字，均非逐字译文。", "This overview and the line notes below are original Guanxiang writing that summarizes traditional themes; they are not a translation.")}</p>
     </section>
 
     <section className="panel" aria-labelledby="judgment">
-      <h2 id="judgment">{t("卦辞原文", "The Judgment (original Chinese)")}</h2>
+      <h2 id="judgment">{t("卦辞原文", "The Judgment")}</h2>
       <p className="classical" lang="zh-Hant">{h.judgment}</p>
+      {en && <p className="legge"><span className="legge-label">Legge, 1882</span>{legge.judgment}</p>}
     </section>
 
     <section className="panel" aria-labelledby="lines">
-      <h2 id="lines">{t("六爻原文（自下而上）", "The six lines (original Chinese, bottom to top)")}</h2>
+      <h2 id="lines">{t("六爻原文（自下而上）", "The six lines, bottom to top")}</h2>
       <ol className="line-list">
-        {h.lineTexts.map((text, i) => <li key={i}><span className="pos">{en ? EN_POSITIONS[i] : ZH_POSITIONS[i]}</span><span className="classical" lang="zh-Hant">{text}</span></li>)}
-        {h.extra.map(text => <li key={text}><span className="pos">{t("用爻", "All lines changing")}</span><span className="classical" lang="zh-Hant">{text}</span></li>)}
+        {h.lineTexts.map((text, i) => <li key={i}>
+          <span className="pos">{en ? EN_POSITIONS[i] : ZH_POSITIONS[i]}</span>
+          <div>
+            <p className="classical" lang="zh-Hant">{text}</p>
+            {en && <p className="legge"><span className="legge-label">Legge</span>{legge.lines[i]}</p>}
+            {en && legge.gaps?.includes(i + 1) && <p className="fine">Part of this line is missing from the 1882 scan we transcribe; the gap is marked “…” rather than reconstructed.</p>}
+            {en && reading && <p className="line-note"><span className="legge-label">Reading</span>{reading.lines[i]}</p>}
+          </div>
+        </li>)}
+        {h.extra.map((text, i) => <li key={text}>
+          <span className="pos">{t("用爻", "All lines changing")}</span>
+          <div>
+            <p className="classical" lang="zh-Hant">{text}</p>
+            {en && legge.extra[i] && <p className="legge"><span className="legge-label">Legge</span>{legge.extra[i]}</p>}
+            {en && reading?.extra && <p className="line-note"><span className="legge-label">Reading</span>{reading.extra}</p>}
+          </div>
+        </li>)}
       </ol>
-      <p className="fine">{t("保留所见繁体原文及标点；不同版本可能有异文。", "Traditional-character text as published; editions may differ slightly.")} <a href={h.source} rel="noopener" target="_blank">{t("核对维基文库原文与版本", "Check the Wikisource revision")}</a></p>
+      <p className="fine">{t("保留所见繁体原文及标点；不同版本可能有异文。", "Chinese: traditional-character text as published; editions may differ slightly.")} <a href={h.source} rel="noopener" target="_blank">{t("核对维基文库原文与版本", "Check the Wikisource revision")}</a></p>
+      {en && <p className="fine">English: {LEGGE_CITATION}, public domain. {legge.proofread ? "Transcription proofread against the scan on Wikisource." : "Transcribed from the 1882 scan and corrected by hand."} <a href={legge.source} rel="noopener" target="_blank">Source</a>. Legge’s bracketed words are his own additions to the Chinese.</p>}
     </section>
 
     <div className="actions">

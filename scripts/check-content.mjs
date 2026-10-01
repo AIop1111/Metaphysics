@@ -142,3 +142,22 @@ for (const lang of ["zh", "en"]) {
   assert.ok(mbtiHtml.includes(lang === "zh" ? "正在读取本地进度" : "Loading your local progress"));
 }
 console.log("Server render checks passed: three parallel home portals, both library languages, and zodiac/MBTI initial render states.");
+
+const { LEGGE } = load(path.join(root, "lib/legge"));
+const { READINGS_EN } = load(path.join(root, "lib/hexagram-readings-en"));
+assert.equal(LEGGE.length, 64);
+LEGGE.forEach((entry, i) => {
+  const n = i + 1, reading = READINGS_EN[n];
+  assert.equal(entry.number, n);
+  assert.ok(entry.judgment.length > 20, `Legge judgment ${n}`);
+  assert.equal(entry.lines.length, 6, `Legge lines ${n}`);
+  entry.lines.forEach((line, j) => {
+    assert.ok(line.length > 15 && !/[/[\]]|\bKING\.|\d{3}/.test(line), `Legge line ${n}.${j + 1}`);
+    if (line.startsWith("…")) assert.ok(entry.gaps?.includes(j + 1), `Unmarked gap ${n}.${j + 1}`);
+  });
+  assert.equal(entry.extra.length, HEXAGRAMS[i].extra.length, `Legge extra ${n}`);
+  assert.ok(/^https:\/\//.test(entry.source));
+  assert.ok(reading && reading.essay.length === 2 && reading.lines.length === 6 && [...reading.essay, ...reading.lines].every(text => text.length >= 5), `Reading ${n}`);
+  assert.equal(Boolean(reading.extra), HEXAGRAMS[i].extra.length > 0, `Reading extra ${n}`);
+});
+console.log("English reference checks passed: 64 Legge judgments, 384 Legge lines (2 marked gaps), 64 original readings.");

@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const origin = await siteOrigin();
   const title = lang === "en" ? "The 64 I Ching Hexagrams: Meanings, Trigrams & Original Text | Guanxiang" : "《周易》六十四卦全表：卦辞爻辞原文与白话导读 | 观象";
   const description = lang === "en"
-    ? "All 64 hexagrams of the I Ching (Book of Changes) in King Wen order, with pinyin, upper and lower trigrams, original Chinese judgments and line texts, and short original overviews."
+    ? "All 64 hexagrams of the I Ching (Book of Changes) in King Wen order: pinyin, trigrams, the original Chinese judgments and line texts with Legge's translation, and original line-by-line readings."
     : "按通行卦序浏览《周易》六十四卦：卦名、上下卦、卦辞与六爻繁体原文、版本出处及观象原创白话导读。";
   const url = origin + hexagramIndexPath(lang);
   return { title, description, alternates: { canonical: url, languages: languageAlternates(origin, hexagramIndexPath) }, openGraph: { type: "website", url, title, description } };
@@ -30,7 +30,7 @@ export default async function HexagramIndex({ params }: { params: Params }) {
   return <>
     <p className="eyebrow">{en ? "I Ching · Book of Changes" : "《周易》"}</p>
     <h1>{en ? "The 64 hexagrams of the I Ching" : "六十四卦"}</h1>
-    <p className="lede">{en ? "In the traditional King Wen order. Each page has the original Chinese judgment and six line texts, the two trigrams, and a short original overview." : "按通行卦序排列。每卦一页，收录卦辞与六爻原文、上下卦结构和观象原创白话导读。"}</p>
+    <p className="lede">{en ? "In the traditional King Wen order. Each page has the original Chinese judgment and six line texts with James Legge's 1882 translation, the two trigrams, an original overview and a note on every line." : "按通行卦序排列。每卦一页，收录卦辞与六爻原文、上下卦结构和观象原创白话导读。"}</p>
     <a className="lang-switch" href={hexagramIndexPath(other)} hrefLang={HREFLANG[other]} lang={HREFLANG[other]}>{en ? "中文版" : "English version"}</a>
     <ul className="hex-grid">
       {HEXAGRAMS.map(h => <li key={h.number}><a href={hexagramPath(lang, h.number)}>
