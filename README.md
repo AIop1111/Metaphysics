@@ -1,1 +1,99 @@
-# Metaphysics
+# 观象 · Guanxiang
+
+简洁深色界面的双语文化阅读与个人观察网站。首页并列展示卦象、星座、MBTI，保留淡星空背景，配有知识书阁与本地手记。
+
+这是 2026-10-01 已发布简洁版的完整源码导出。原站源码提交为 `9815590fbf91a24800004ed94bcbbe08e4c6f26b`。本包补充了 GitHub 使用说明、忽略规则和文件校验清单；应用源码、图片、依赖版本及框架配置保持原样。
+
+## 包含什么
+
+- 完整 React / TypeScript / Vinext 项目与简洁版样式。
+- 六十四卦数据、384 条爻辞、原创导读及任意爻位互动变化。
+- 十二星座每日原创娱乐阅读，24 题原创 MBTI 偏好练习与十六种类型。
+- 三条入门路径、术语、资料导航与虚构教学案例。
+- 三类结果保存、手记回看、MBTI 分数对照、Markdown 导出。
+- 图片资源、依赖锁文件、Cloudflare Worker 构建配置和第三方许可证。
+
+手记、星座偏好与 MBTI 进度存放在访问者的浏览器中。本源码包不包含任何用户手记、浏览器数据、密钥、依赖安装目录、旧 Git 历史或构建缓存。
+
+## 上传到 GitHub
+
+先解压 ZIP，进入里面的 `guanxiang` 文件夹。仓库根目录应直接放置 `package.json`、`README.md`、`app/`、`components/`、`lib/` 和 `public/`；不要把 ZIP 文件本身作为唯一源码上传。
+
+### 使用 Git 命令
+
+1. 在 GitHub 创建空仓库，例如 `guanxiang`。创建时先不勾选自动生成 README、许可证或 `.gitignore`，本包已提供 README 与忽略规则。
+2. 在解压后的 `guanxiang` 文件夹打开 PowerShell、终端或 Git Bash。
+3. 运行以下命令，把示例地址中的 `YOUR_USERNAME` 换成自己的 GitHub 用户名：
+
+```sh
+git init -b main
+git add .
+git commit -m "Initial Guanxiang source"
+git remote add origin https://github.com/YOUR_USERNAME/guanxiang.git
+git push -u origin main
+```
+
+首次使用 Git 时，如提交提示没有作者身份，先设置 `git config --global user.name "你的名字"` 和 `git config --global user.email "你的邮箱"`。推送时按 GitHub 的登录提示完成验证。
+
+### 使用 GitHub Desktop
+
+在 GitHub Desktop 中选择 **File → New repository**，仓库名填写 `guanxiang`，创建一个本地仓库。把本包 `guanxiang` 文件夹内的全部文件复制进去（包含 `.gitignore`、`.npmrc` 和 `.openai` 等配置），提交后点击 **Publish repository**，选择公开或私有即可。
+
+官方说明：[使用命令行上传本地代码](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github) · [GitHub Desktop](https://docs.github.com/en/desktop/adding-and-cloning-repositories/adding-an-existing-project-to-github-using-github-desktop)。
+
+## 在自己的电脑运行
+
+需要 Node.js **22.13.0 或更高版本**，以及项目固定版本 **pnpm 11.25.0**。Windows 可以在 PowerShell 中执行下列命令，无需使用本项目的 Linux 专用安装脚本。
+
+先安装 pnpm：
+
+```sh
+npm install --global pnpm@11.25.0
+```
+
+然后在 `guanxiang` 文件夹中运行：
+
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+浏览器打开 `http://localhost:5173`。启动后修改代码会自动刷新。依赖由 `pnpm-lock.yaml` 固定，无需把 `node_modules` 上传 GitHub。
+
+## 检查与构建
+
+```sh
+node scripts/check-content.mjs
+pnpm exec tsc --noEmit --incremental false
+pnpm build
+```
+
+检查包括六十四卦与爻辞位置、可逆变爻、MBTI 计分边界、旧／新手记读取、导出和初始页面渲染。构建产物输出到 `dist/`；`pnpm start` 可运行本地构建预览，使用其打印的地址。
+
+本包保留 Vinext 与 Cloudflare Worker 构建结构。上传 GitHub 用于存放和维护源码；实际网站发布使用兼容的 Worker / Sites 部署流程。
+
+## 主要文件
+
+| 路径 | 用途 |
+| --- | --- |
+| `app/page.tsx` | 首页、卦象探索与手记 |
+| `app/minimal-ui.css` | 简洁深色风格 |
+| `app/globals.css` | 基础排版、交互与响应式布局 |
+| `components/horoscope.tsx` | 星座页面 |
+| `components/mbti.tsx` | MBTI 页面 |
+| `components/knowledge-library.tsx` | 六十四卦与知识书阁 |
+| `lib/hexagrams-data.json` | 卦辞、爻辞及所核对版本出处 |
+| `lib/knowledge.ts` | 入门、术语、资料与案例 |
+| `lib/iching.ts` | 手记格式、兼容读取与导出 |
+| `lib/results.ts` | 结果快照 |
+| `public/assets/` | 图片资源 |
+| `SOURCE_MANIFEST.json` | 导出来源、文件清单与 SHA-256 校验 |
+| `docs/SITES_RUNTIME.md` | 原项目说明及框架维护文档 |
+
+`.openai/hosting.json` 中保留原站点的项目标识及空存储绑定；它不是访问密钥，正常本地运行不需要修改。若要在 Sites 创建独立新站，应通过该平台关联自己的项目。
+
+## 内容来源
+
+六十四卦古籍文本来自所核对版本的维基文库《周易》，每条数据都保留固定版本链接。双语导读、思考问题、星座文案、偏好练习和案例为观象原创编辑内容。星座文案属于娱乐阅读；MBTI 练习不是官方量表。
+
+框架插件和组件样式的第三方许可证随源码保留在 `build/sites-vite-plugin.LICENSE` 和 `vendor/shadcn-tailwind-4.13.0.LICENSE.md`。
