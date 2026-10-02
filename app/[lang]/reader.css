@@ -114,3 +114,31 @@ h2 { margin: 0 0 12px; font-size: 1.2rem; font-weight: 600; }
 .cast-journal .actions { margin: 4px 0 0; }
 @media (max-width: 720px) { .caster { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .cast-arrow { display: none; } }
+
+/* English home */
+.reader-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.reader-footer-links { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.reader-footer-links a { color: var(--muted-foreground); }
+.home-hero { padding: 24px 0 8px; }
+.home-hero h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); }
+.home-hero .lede { max-width: 42em; font-size: 1.05rem; }
+.home-hero .actions { margin: 24px 0 8px; }
+.reader-main > section { margin-bottom: 32px; }
+.daily-body { display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: start; }
+.daily h2 a { color: var(--foreground); text-decoration: none; }
+.daily h2 a:hover { color: var(--primary); }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0 0 12px; padding: 0; list-style: none; counter-reset: step; }
+.steps li { position: relative; padding: 18px 18px 18px 52px; border: 1px solid var(--border); border-radius: 10px; background: var(--card); counter-increment: step; }
+.steps li::before { content: counter(step); position: absolute; left: 18px; top: 17px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--surface-soft); color: var(--primary); font-size: .85rem; }
+.steps strong { display: block; margin-bottom: 4px; }
+.trigram-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 20px 0 0; padding: 0; list-style: none; }
+.trigram-grid li { display: grid; grid-template-columns: auto 1fr; gap: 18px; padding: 16px 18px; border: 1px solid var(--border); border-radius: 10px; background: var(--card); }
+.trigram-grid h3 { margin: 0 0 4px; font-size: 1.02rem; font-weight: 600; }
+.trigram-grid p { margin: 0 0 4px; }
+.trigram-figure { display: grid; gap: 6px; width: 54px; padding-top: 4px; }
+.trigram-figure .line { display: flex; gap: 8px; height: 7px; }
+.trigram-figure .line i { flex: 1; border-radius: 2px; background: #b9c1d6; }
+.also ul { margin: 0; padding-left: 1.2em; color: var(--muted-foreground); }
+.also li { margin-bottom: 6px; }
+@media (max-width: 720px) { .steps, .trigram-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .daily-body { grid-template-columns: 1fr; } }

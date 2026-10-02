@@ -1,5 +1,5 @@
 import { HEXAGRAMS } from "@/lib/hexagrams";
-import { HREFLANG, SITE_LOCALES, hexagramIndexPath, hexagramPath, originFromRequest, readingPath, type SiteLocale } from "@/lib/site";
+import { HOME_ALTERNATES, HREFLANG, SITE_LOCALES, hexagramIndexPath, hexagramPath, originFromRequest, readingPath, type SiteLocale } from "@/lib/site";
 
 const escape = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -11,7 +11,8 @@ export function GET(request: Request) {
     ...SITE_LOCALES.map(lang => `    <xhtml:link rel="alternate" hreflang="${HREFLANG[lang]}" href="${escape(origin + pathFor(lang))}"/>\n`),
     `    <xhtml:link rel="alternate" hreflang="x-default" href="${escape(origin + pathFor("en"))}"/>\n`,
   ].join("");
-  const body = entry(`${origin}/`) + pages.flatMap(pathFor => SITE_LOCALES.map(lang => entry(origin + pathFor(lang), links(pathFor)))).join("");
+  const homeLinks = Object.entries(HOME_ALTERNATES(origin)).map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${escape(href)}"/>\n`).join("");
+  const body = entry(`${origin}/`, homeLinks) + entry(`${origin}/en`, homeLinks) + pages.flatMap(pathFor => SITE_LOCALES.map(lang => entry(origin + pathFor(lang), links(pathFor)))).join("");
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${body}</urlset>\n`;
   return new Response(xml, { headers: { "content-type": "application/xml; charset=utf-8", "cache-control": "public, max-age=3600" } });
 }

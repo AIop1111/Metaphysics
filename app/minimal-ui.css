@@ -204,3 +204,12 @@ body { background: var(--background); }
 .minimal-ui .home-portal-cast { display: block; margin: -12px 0 16px; color: var(--primary); font-size: 13px; text-decoration: none; }
 @media (max-width: 560px) { .minimal-ui .home-portal-cast { margin: 0 0 10px; font-size: 12px; } .minimal-ui .home-portal-cast .cast-extra { display: none; } }
 .minimal-ui .home-portal-cast:hover { text-decoration: underline; text-underline-offset: 3px; }
+.minimal-ui .home-iching-hero { margin: 0 0 18px; padding: 28px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+.minimal-ui .home-iching-hero .eyebrow { margin: 0 0 8px; color: #96a0b2; font-size: .75rem; letter-spacing: .08em; }
+.minimal-ui .home-iching-hero h1 { margin: 0 0 8px; font-family: var(--font-sans); font-size: 2.25rem; font-weight: 600; color: #eef0f5; }
+.minimal-ui .home-iching-hero p { max-width: 44em; margin: 0; color: #aab6ca; line-height: 1.75; }
+.minimal-ui .home-iching-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.minimal-ui .home-also { margin: 0 0 8px; color: #9da7ba; font-size: .9rem; }
+.minimal-ui .home-also button { padding: 0; border: 0; background: none; color: var(--primary); font: inherit; cursor: pointer; }
+.minimal-ui .home-also button:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 560px) { .minimal-ui .home-iching-hero { padding: 20px 16px; } .minimal-ui .home-iching-hero h1 { font-size: 1.6rem; } .minimal-ui .home-iching-actions > * { flex: 1 1 100%; } }

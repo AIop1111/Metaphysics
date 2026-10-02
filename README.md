@@ -78,6 +78,7 @@ pnpm build
 
 | 网址 | 内容 |
 | --- | --- |
+| `/en` | 英文首页（服务端渲染）：以易经为主——起卦、今日一卦、三步说明、八卦、文本出处；星座与 MBTI 放在“Also on Guanxiang”。`/zh` 永久跳转到 `/`；`/` 与 `/en` 互为 hreflang 中英文版本 |
 | `/zh/hexagram`、`/en/hexagram` | 六十四卦总表 |
 | `/zh/hexagram/49-ge`、`/en/hexagram/49-ge` | 单卦页面（卦序 + 拼音）；`/en/hexagram/49` 会 308 跳转到规范网址 |
 | `/zh/reading`、`/en/reading` | 在线起卦（三枚铜钱法，浏览器加密随机数），可逐爻或一次掷完 |
@@ -86,7 +87,7 @@ pnpm build
 
 英文单卦页另附理雅各（James Legge）1882 年英译的卦辞与爻辞（公有领域，`lib/hexagrams-legge.json`，经 [opencosmos-ai/iching](https://github.com/opencosmos-ai/iching)（CC0）转录：1–31 卦对照维基文库扫描本校对；32–64 卦为扫描 OCR，卦辞取自另一份 Legge 文本，爻辞经人工校正，39 与 64 卦上爻扫描缺字处以“…”标出而不补写），以及观象原创的英文导读与逐爻解读（`lib/hexagram-readings-en.ts`）。
 
-每页带 `canonical`、`hreflang`（zh-Hans / en / x-default）、Open Graph 与 JSON-LD 面包屑。首页支持 `/?lang=en`，未保存语言偏好时按浏览器语言选择中英文。
+每页带 `canonical`、`hreflang`（zh-Hans / en / x-default）、Open Graph 与 JSON-LD 面包屑。互动应用在英文模式下也以易经为主：首页顶部为起卦与六十四卦入口，星座与 MBTI 收为一行链接并移到导航末尾；中文模式保持原样。首页支持 `/?lang=en`，未保存语言偏好时按浏览器语言选择中英文。
 
 **上线前请设置 `NEXT_PUBLIC_SITE_URL`**（如 `https://你的域名`），让 canonical、hreflang 和站点地图都指向主域名；未设置时使用请求的主机名。之后在 Google Search Console 提交 `/sitemap.xml`。
 

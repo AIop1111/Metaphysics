@@ -68,3 +68,7 @@ export function languageAlternates(origin: string, pathFor: (lang: SiteLocale) =
 export const zhImageName = (h: HexagramText) => h.upper === h.lower ? `${h.name}为${trigramName(h.upper, "zh")}` : `${trigramName(h.upper, "zh")}${trigramName(h.lower, "zh")}${h.name}`;
 
 export const readingPath = (lang: SiteLocale) => `/${lang}/reading`;
+
+/** Home pages: the interactive app at "/" (Chinese-first) and the I Ching-led English home at "/en". */
+export const homePath = (lang: SiteLocale) => (lang === "en" ? "/en" : "/");
+export const HOME_ALTERNATES = (origin: string) => ({ "zh-Hans": `${origin}/`, en: `${origin}/en`, "x-default": `${origin}/en` });
