@@ -1,0 +1,215 @@
+/* A quiet reading space: flat surfaces, one accent, and a faint night sky. */
+:root {
+  --background: #0b0e14;
+  --foreground: #e7eaf0;
+  --card: #11151d;
+  --card-foreground: #e7eaf0;
+  --popover: #151a23;
+  --popover-foreground: #e7eaf0;
+  --primary: #a6adff;
+  --primary-foreground: #101323;
+  --secondary: #1c222d;
+  --secondary-foreground: #dce1eb;
+  --muted: #171c26;
+  --muted-foreground: #a5afc1;
+  --accent: #222936;
+  --accent-foreground: #eef0f7;
+  --border: #2a303c;
+  --input: #353d4b;
+  --ring: #a6adff;
+  --ink-red: #a6adff;
+  --font-editorial: var(--font-sans);
+  --font-classic: "Songti SC", "Noto Serif CJK SC", "Noto Serif SC", "STSong", Georgia, serif;
+  --surface: #11151d;
+  --surface-soft: #161b25;
+  --surface-selected: #21273b;
+}
+body { background: var(--background); }
+::selection { background: #455075; color: #fff; }
+.minimal-ui { color: var(--foreground); }
+.minimal-ui.cosmic-theme::before { background: url("/assets/cosmic-nebula.webp") center top / cover no-repeat; opacity: .045; }
+.minimal-ui.cosmic-theme::after { display: none; }
+.minimal-ui * { text-shadow: none; box-shadow: none; }
+.minimal-ui .cosmic-landscape { animation: none; }
+
+/* Compact navigation and a single, consistent title hierarchy. */
+.minimal-ui .site-header { max-width: 1200px; height: auto; min-height: 80px; padding: 17px 32px; gap: 20px; flex-wrap: wrap; background: transparent; border-color: var(--border); }
+.minimal-ui .brand { min-width: 120px; gap: 0; }
+.minimal-ui .brand-word { gap: 2px; }
+.minimal-ui .brand-word strong { font-family: var(--font-sans); font-size: 1.25rem; font-weight: 600; letter-spacing: .03em; color: #eef0f5; }
+.minimal-ui .brand-word > span { margin-top: 0; color: #96a0b2; font-size: .75rem; letter-spacing: .08em; }
+.minimal-ui .site-header nav { gap: 3px; align-self: center; }
+.minimal-ui .site-header nav a { padding: 9px 12px; min-height: 44px; height: auto; font-size: .875rem; line-height: 1.6; border: 0; border-radius: 6px; color: #a9b2c3; white-space: normal; }
+.minimal-ui .site-header nav a:hover { background: #191e28; color: #e3e7f0; }
+.minimal-ui .site-header nav a.active { background: var(--surface-selected); color: #c3c9ff; }
+.minimal-ui .language-button { color: #abb5c7; min-width: 64px; }
+.minimal-ui .site-main { max-width: 1160px; padding: 32px 32px 64px; }
+.minimal-ui .page-heading { padding: 3px 0 26px; gap: 24px; }
+.minimal-ui .page-heading h1 { font-size: 1.75rem; font-family: var(--font-sans); font-weight: 600; letter-spacing: 0; line-height: 1.55; margin-bottom: 8px; }
+.minimal-ui .page-heading p:not(.eyebrow) { color: #a9b4c7; line-height: 1.8; }
+.minimal-ui .page-heading .eyebrow, .minimal-ui .section-heading .eyebrow, .minimal-ui .home-hub-question .eyebrow { display: none; }
+.minimal-ui .section-heading { margin-bottom: 20px; gap: 15px; }
+.minimal-ui .section-heading h2 { font-family: var(--font-sans); font-size: 1.25rem; line-height: 1.6; font-weight: 600; }
+.minimal-ui .eyebrow { font-size: .875rem; color: #a3aec2; letter-spacing: .02em; }
+.minimal-ui .fine-print { color: #9da8bc; }
+.minimal-ui .site-footer { max-width: 1200px; background: transparent; border-color: var(--border); padding: 24px 32px; color: #9da7ba; }
+.minimal-ui .site-footer > div { flex-wrap: wrap; }
+.minimal-ui .footer-links { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; }
+.minimal-ui .footer-links a { color: inherit; text-decoration: none; }
+.minimal-ui .footer-links a:hover { color: var(--primary); }
+
+/* Essential controls keep their full touch and keyboard targets. */
+.minimal-ui [data-slot="button"] { border-radius: 6px; font-size: .9375rem; min-height: 44px; transition: background-color .15s, border-color .15s; }
+.minimal-ui [data-slot="button"].bg-primary { background: var(--primary); color: var(--primary-foreground); border: 1px solid transparent; box-shadow: none; }
+.minimal-ui [data-slot="button"].bg-primary:hover { background: #bcc1ff; box-shadow: none; }
+.minimal-ui [data-slot="button"].bg-background { background: transparent; color: #d2d9e8; border-color: #3b4354; }
+.minimal-ui [data-slot="button"].bg-background:hover { background: #202633; border-color: #69758a; }
+.minimal-ui :is([data-slot="input"], [data-slot="textarea"], [data-slot="select-trigger"]) { background: #0f131b; color: #e1e6f0; border-color: #394254; border-radius: 6px; }
+.minimal-ui :is([data-slot="input"], [data-slot="textarea"])::placeholder { color: #929fb5; }
+.minimal-ui :is([data-slot="input"], [data-slot="textarea"]):focus-visible { border-color: var(--ring); box-shadow: none; }
+.minimal-ui .source-link, .minimal-ui .mbti-source-links a { color: #b8c2ff; }
+.knowledge-dialog, [data-slot="alert-dialog-content"], [data-slot="select-content"], [data-slot="popover-content"] { background: var(--popover); border-color: var(--border); border-radius: 9px; backdrop-filter: none; box-shadow: 0 12px 36px #0005; }
+.knowledge-dialog :is([data-slot="dialog-title"], [data-slot="dialog-description"]), [data-slot="alert-dialog-title"], [data-slot="alert-dialog-description"] { color: var(--foreground); }
+
+/* Three equal, text-led entry points remain together on the first screen. */
+.minimal-ui .home-hub-intro { margin-bottom: 24px; }
+.minimal-ui .home-hub-intro h1 { font-family: var(--font-sans); font-size: 1.75rem; font-weight: 600; line-height: 1.6; letter-spacing: 0; margin: 0 0 7px; }
+.minimal-ui .home-hub-intro > p { color: #a4b0c6; }
+.minimal-ui .home-portals { gap: 18px; }
+.minimal-ui .home-portal { align-items: flex-start; text-align: left; padding: 25px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; }
+.minimal-ui .home-portal:hover { border-color: #59657a; box-shadow: none; }
+.minimal-ui .home-portal h2 { font-family: var(--font-sans); font-size: 1.375rem; font-weight: 600; color: #e9edf6; margin: 0 0 12px; }
+.minimal-ui .home-portal-description { color: #aab6ca; font-size: 1rem; margin-bottom: 14px; line-height: 1.85; }
+.minimal-ui .home-portal-meta { color: #a4aec0; font-size: .875rem; margin-bottom: 22px; }
+.minimal-ui .home-portal [data-slot="button"] { background: transparent; color: #c1c9ff; border-color: #404b68; margin-top: auto; }
+.minimal-ui .home-portal [data-slot="button"]:hover { background: var(--surface-selected); border-color: #7782a4; }
+.minimal-ui :is(.home-daily-section, .home-recent-section) { margin-top: 34px; padding-top: 28px; border-color: var(--border); }
+.minimal-ui :is(.home-daily-grid, .home-recent-grid, .learning-grid) { gap: 18px; }
+.minimal-ui :is(.home-daily-grid > button, .home-recent-card) { padding: 22px; border-color: var(--border); border-radius: 8px; background: var(--surface); }
+.minimal-ui :is(.home-daily-grid > button, .home-recent-card):hover { border-color: #556179; }
+.minimal-ui :is(.home-daily-grid h3, .home-recent-card h3) { color: #dce2ef; }
+.minimal-ui .home-hub-question { margin-top: 34px; padding-top: 28px; gap: 30px; border-color: var(--border); }
+.minimal-ui .home-hub-question h2 { font-family: var(--font-sans); font-size: 1.25rem; font-weight: 600; }
+.minimal-ui .home-hub-question > div > p:not(.eyebrow) { color: #a7b2c5; }
+.minimal-ui .learning-section { margin-top: 38px; padding-top: 28px; border-top: 1px solid var(--border); }
+.minimal-ui .learning-card { background: transparent; padding: 18px 0; border: 0; border-top: 1px solid var(--border); border-radius: 0; }
+.minimal-ui .learning-card:hover { transform: none; border-color: #778197; box-shadow: none; }
+.minimal-ui .learning-card-top { color: #8f9db6; }
+.minimal-ui .learning-card h3 { font-family: var(--font-sans); font-size: 1.0625rem; font-weight: 600; margin: 15px 0 7px; }
+.minimal-ui .read-link { border: 0; padding-top: 0; margin-top: 18px; color: #b5bfff; }
+.minimal-ui .home-recent-empty { background: transparent; border-color: #394252; border-radius: 8px; }
+
+/* The same flat surface and neutral labels extend across every module. */
+.minimal-ui :is(.question-start, .explore-controls, .diagram-sheet, .journal-paper, .horoscope-paper, .mbti-exercise, .mbti-type-paper, .hex-detail-diagram, .hex-detail-text, .lesson-paper, .case-paper, .term-card, .resource-card, .case-card, .learning-path, .hexagram-card, .journal-result-card) { background: var(--surface); border-color: var(--border); border-radius: 9px; box-shadow: none; backdrop-filter: none; }
+.minimal-ui :is(.diagram-center, .horoscope-sign-header) { background: transparent; }
+.minimal-ui :is(.explore-tabs, .mbti-tabs) { background: #171c26; border-color: var(--border); border-radius: 6px; }
+.minimal-ui :is(.explore-tabs, .mbti-tabs) [data-slot="tabs-trigger"][data-state="active"] { background: #293248; border-color: #596886; color: #dce4f7; box-shadow: none; }
+.minimal-ui .status-dot::before { background: #b0bedc; box-shadow: none; }
+.minimal-ui .diagram-sheet { min-height: 450px; }
+.minimal-ui .diagram-name .large-character { color: #dce1ed; font-size: 4.5rem; }
+.minimal-ui .diagram-english { font-family: var(--font-sans); font-size: 1rem; }
+.minimal-ui .line-stroke i { background: #aab6cb; box-shadow: none; }
+.minimal-ui .workbench-line .line-stroke i { background: #aab6cb; box-shadow: none; }
+.minimal-ui :is(.moving-line, .is-changed) .line-stroke i { background: var(--primary); }
+.minimal-ui .moving-line:hover .line-stroke i { background: #c3c8ff; transform: none; }
+.minimal-ui :is(.example-option.selected, .journal-entry-item.selected) { background: var(--surface-selected); border-color: #7984a9; }
+.minimal-ui .example-option { border-radius: 6px; border-color: var(--border); }
+.minimal-ui :is(.reading-content, .reading-symbol, .quiet-note) { background: transparent; }
+.minimal-ui .reading-block h2 { font-family: var(--font-sans); font-size: 1.375rem; font-weight: 600; }
+.minimal-ui :is(.reading-original, .book-exercise, .horoscope-action, .mbti-candidates, .term-example, .journal-legacy-note, .book-editorial-note) { background: var(--surface-soft); border-color: #3b4356; border-radius: 7px; }
+.minimal-ui :is(.horoscope-overall h3, .horoscope-sign-identity h2, .mbti-result-identity h3, .mbti-type-header h2) { font-family: var(--font-sans); color: #e1e5f0; font-weight: 600; }
+.minimal-ui .horoscope-large-glyph { color: #b3bed3; font-size: 3rem; }
+.minimal-ui .horoscope-action-mark { background: #2d3444; color: #ccd5e6; border: 0; }
+.minimal-ui .zodiac-option { background: var(--surface); border-color: var(--border); border-radius: 6px; }
+.minimal-ui .zodiac-option:hover { background: #1c222e; border-color: #56637b; }
+.minimal-ui .zodiac-option[data-selected="true"] { background: var(--surface-selected); border-color: #8c98b9; box-shadow: none; }
+.minimal-ui :is(.zodiac-glyph, .zodiac-option[data-selected="true"] .zodiac-glyph) { color: #bdc8dc; text-shadow: none; }
+.minimal-ui .mbti-question { background: var(--surface); border-color: var(--border); border-radius: 8px; }
+.minimal-ui .mbti-answer { background: #131923; border-color: #384155; border-radius: 6px; }
+.minimal-ui .mbti-answer:hover { background: #202839; border-color: #76829f; }
+.minimal-ui .mbti-answer[data-selected="true"] { background: var(--surface-selected); border-color: #a4aff2; color: #e5e8ff; box-shadow: none; }
+.minimal-ui .mbti-progress [data-slot="progress-indicator"] { background: #a6adff; }
+.minimal-ui :is(.mbti-result-code, .mbti-profile-code) { color: #c5ccff; font-family: var(--font-sans); font-size: 3rem; font-weight: 500; letter-spacing: 0; }
+.minimal-ui .mbti-type-option { background: var(--surface); border-color: var(--border); border-radius: 6px; }
+.minimal-ui .mbti-type-option:hover { border-color: #71809a; }
+.minimal-ui .mbti-type-option[data-selected="true"] { background: var(--surface-selected); border-color: #929dcd; box-shadow: none; }
+.minimal-ui .mbti-type-stamp { border-color: #566582; color: #c3caff; background: transparent; border-radius: 5px; }
+.minimal-ui .topic-chip { background: #1b212d; border-color: transparent; color: #aebacf; border-radius: 4px; }
+
+/* The library reads like a catalogue, with quiet tabs and compact controls. */
+.minimal-ui .book-counts { border: 0; background: transparent; padding: 0; color: #a3b0c6; font-size: .8125rem; }
+.minimal-ui .book-tabs { padding: 0; gap: 5px; background: transparent; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; margin-bottom: 28px; }
+.minimal-ui .book-tabs [data-slot="tabs-trigger"] { color: #9eaac0; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent; box-shadow: none; }
+.minimal-ui .book-tabs [data-slot="tabs-trigger"][data-state="active"] { background: transparent; border-bottom-color: #adb7ff; color: #d6dcff; box-shadow: none; }
+.minimal-ui :is(.book-intro-row h2, .book-faq h2, .lesson-paper h2, .case-paper h2) { color: #e4e8f0; font-family: var(--font-sans); font-size: 1.375rem; font-weight: 600; }
+.minimal-ui .hexagram-filters { background: transparent; border: 0; padding: 0; border-radius: 0; }
+.minimal-ui .hexagram-card { padding: 21px; }
+.minimal-ui .hexagram-card:hover { background: #171d29; border-color: #677490; }
+.minimal-ui .hexagram-card h3 { font-family: var(--font-sans); color: #dfe5f2; font-size: 1.5rem; font-weight: 500; }
+.minimal-ui .hexagram-card h3 > span { color: #a7b6ce; }
+.minimal-ui .hex-card-top { color: #91a0b9; }
+.minimal-ui .mini-hexagram i { background: #a9b7cd; box-shadow: none; }
+.minimal-ui .content-label { color: #a5b1c7; letter-spacing: .03em; }
+.minimal-ui .hex-detail-identity > span { color: #b2bdd4; }
+.minimal-ui .hex-detail-identity h2 { font-family: var(--font-sans); font-size: 2rem; font-weight: 500; color: #e2e8f5; }
+.minimal-ui .workbench-line { color: #a9b7ce; border-radius: 6px; }
+.minimal-ui .workbench-line:hover { background: #1d2638; border-color: #566585; }
+.minimal-ui .workbench-line.is-moving { background: var(--surface-selected); border-color: #8a9bcc; color: #d6dfff; }
+.minimal-ui .workbench-line.is-moving .line-stroke i { background: #c7d1ff; }
+.minimal-ui .pattern-transition { border-color: var(--border); }
+.minimal-ui :is(.book-reading-section h3, .lesson-section h3, .case-paper section h3, .term-card h3, .resource-card h3, .case-card h3, .learning-path h3, .journal-result-card h3, .journal-comparison h3) { font-family: var(--font-sans); font-weight: 600; color: #dce4f2; }
+.minimal-ui :is(.classical-judgment, .classical-lines p, .extra-line-text) { font-family: var(--font-classic); }
+.minimal-ui .classical-judgment { color: #e0e5ef !important; }
+.minimal-ui .classical-lines .selected-line-text { background: #212a40; border-color: #6679a8; }
+.minimal-ui .classical-lines .selected-line-text p { color: #d7e2ff; }
+.minimal-ui :is(.learning-path header, .learning-path li + li, .book-reading-section + .book-reading-section, .book-detail-navigation, .book-faq, .journal-comparison) { border-color: var(--border); }
+.minimal-ui .learning-path header > span { color: #b0bed7; font-size: 1.25rem; }
+.minimal-ui .learning-path li button:hover { background: #1b2330; }
+.minimal-ui .book-exercise > span { color: #bac6df; }
+.minimal-ui .book-empty { background: transparent; border-color: #3c465a; border-radius: 8px; }
+.minimal-ui .journal-entry-item { background: var(--surface); border-color: var(--border); border-radius: 6px; }
+.minimal-ui .journal-entry-item strong { font-family: var(--font-sans); font-size: 1rem; }
+.minimal-ui .journal-snapshot-dimensions > div { background: #0e131d; border-radius: 6px; }
+.minimal-ui .comparison-table-wrap { border-color: var(--border); border-radius: 6px; }
+.minimal-ui .comparison-table-wrap thead { background: #202735; color: #c4cee3; }
+
+@media (max-width: 900px) {
+  .minimal-ui .site-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
+  .minimal-ui .site-header nav { grid-column: 1 / -1; grid-row: 2; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); width: 100%; gap: 4px; }
+  .minimal-ui .site-header nav a { justify-content: center; text-align: center; padding: 9px 6px; }
+  .minimal-ui .language-button { justify-self: end; }
+  .minimal-ui .home-portals { gap: 14px; }
+  .minimal-ui .home-portal { padding: 21px 18px; }
+}
+@media (max-width: 580px) {
+  .minimal-ui .site-header { padding: 18px 20px 14px; }
+  .minimal-ui .site-header nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .minimal-ui .site-main { padding: 25px 20px 48px; }
+  .minimal-ui :is(.page-heading h1, .home-hub-intro h1) { font-size: 1.375rem; }
+  .minimal-ui .home-hub-intro > p { font-size: 1rem; line-height: 1.8; }
+  .minimal-ui .home-portals { gap: 9px; }
+  .minimal-ui .home-portal { padding: 19px 8px 12px; align-items: stretch; text-align: center; border-radius: 7px; }
+  .minimal-ui .home-portal h2 { font-size: 1rem; font-weight: 600; margin-bottom: 17px; }
+  .minimal-ui .home-portal [data-slot="button"] { font-size: .875rem; padding: 0 5px; min-height: 44px; }
+  .minimal-ui .section-heading { align-items: center; flex-wrap: wrap; }
+  .minimal-ui .section-heading [data-slot="button"] { padding: 0 9px; }
+  .minimal-ui .home-hub-question { gap: 18px; }
+  .minimal-ui .book-tabs { gap: 4px; }
+  .minimal-ui .hexagram-card { padding: 19px 14px; }
+  .minimal-ui .hexagram-card h3 { font-size: 1.375rem; }
+  .minimal-ui :is(.mbti-result-code, .mbti-profile-code) { font-size: 2.25rem; }
+  .minimal-ui .horoscope-large-glyph { font-size: 2.5rem; }
+  .minimal-ui .site-footer { padding: 24px 20px; }
+}
+.minimal-ui .home-portal-cast { display: block; margin: -12px 0 16px; color: var(--primary); font-size: 13px; text-decoration: none; }
+@media (max-width: 560px) { .minimal-ui .home-portal-cast { margin: 0 0 10px; font-size: 12px; } .minimal-ui .home-portal-cast .cast-extra { display: none; } }
+.minimal-ui .home-portal-cast:hover { text-decoration: underline; text-underline-offset: 3px; }
+.minimal-ui .home-iching-hero { margin: 0 0 18px; padding: 28px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+.minimal-ui .home-iching-hero .eyebrow { margin: 0 0 8px; color: #96a0b2; font-size: .75rem; letter-spacing: .08em; }
+.minimal-ui .home-iching-hero h1 { margin: 0 0 8px; font-family: var(--font-sans); font-size: 2.25rem; font-weight: 600; color: #eef0f5; }
+.minimal-ui .home-iching-hero p { max-width: 44em; margin: 0; color: #aab6ca; line-height: 1.75; }
+.minimal-ui .home-iching-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.minimal-ui .home-also { margin: 0 0 8px; color: #9da7ba; font-size: .9rem; }
+.minimal-ui .home-also button { padding: 0; border: 0; background: none; color: var(--primary); font: inherit; cursor: pointer; }
+.minimal-ui .home-also button:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 560px) { .minimal-ui .home-iching-hero { padding: 20px 16px; } .minimal-ui .home-iching-hero h1 { font-size: 1.6rem; } .minimal-ui .home-iching-actions > * { flex: 1 1 100%; } }
